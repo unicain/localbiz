@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Única Inteligência | Estrutura e Escala Digital</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deepSpace: '#020617',
+                        cardBg: '#0F172A',
+                        electricBlue: '#3B82F6',
+                        emerald: '#10B981',
+                        amberGold: '#F59E0B',
+                        purpleIA: '#8B5CF6',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover { border-color: rgba(59, 130, 246, 0.3); transform: translateY(-5px); }
+        .btn-glow { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); transition: all 0.3s ease; }
+        .btn-glow:hover { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); transform: scale(1.02); }
+        .hero-gradient { background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 60%); }
+        .ia-gradient { background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, transparent 100%); border: 1px solid rgba(139, 92, 246, 0.2); }
+        .whatsapp-pulse { animation: pulse-green 2s infinite; }
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        .premium-border {
+            position: relative;
+            background: #0F172A;
+            z-index: 1;
+        }
+        .premium-border::before {
+            content: ""; position: absolute; top: -1px; left: -1px; right: -1px; bottom: -1px;
+            background: linear-gradient(45deg, #3B82F6, #8B5CF6, #10B981);
+            z-index: -1; border-radius: inherit; opacity: 0.5;
+        }
+        .logo-img { max-height: 40px; width: auto; object-fit: contain; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Header -->
+    <nav class="fixed w-full z-50 top-0 bg-deepSpace/80 backdrop-blur-md border-b border-white/5 h-20">
+        <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="https://drive.google.com/thumbnail?id=17uwvGbMHXmlj0nxgmeO4VDsTVoKP5oAP&sz=w500" alt="Logo" class="logo-img">
+                <span class="font-heading font-black text-lg tracking-tighter uppercase hidden sm:block">Única <span class="text-electricBlue">Inteligência</span></span>
+            </div>
+            <a href="https://wa.me/5551981868150" target="_blank" class="bg-emerald text-white px-6 py-2.5 rounded-full btn-glow font-bold text-sm flex items-center gap-2">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                Falar no WhatsApp
+            </a>
+        </div>
+    </nav>
+
+    <!-- 1. HERO -->
+    <section class="relative min-h-screen pt-32 pb-20 px-6 flex items-center overflow-hidden hero-gradient">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div class="reveal">
+                <h1 class="font-heading font-black text-5xl lg:text-7xl leading-tight mb-8">
+                    Seu negócio precisa gerar <span class="text-transparent bg-clip-text bg-gradient-to-r from-electricBlue to-emerald">clientes todos os dias.</span>
+                </h1>
+                <p class="text-slate-400 text-xl mb-10 max-w-lg">
+                    Estruturamos sua presença digital e automatizamos seu atendimento para que nenhuma oportunidade seja perdida.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://wa.me/5551981868150" target="_blank" class="bg-emerald text-white px-8 py-4 rounded-xl text-lg font-bold btn-glow flex items-center justify-center gap-3">
+                        👉 Falar no WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Visual Hero: Celular + Mapa + Site -->
+            <div class="relative reveal flex justify-center">
+                <div class="relative w-full max-w-md">
+                    <!-- Mockup Celular Principal -->
+                    <div class="relative z-20 w-64 h-[500px] bg-slate-900 border-[6px] border-slate-800 rounded-[2.5rem] shadow-2xl mx-auto overflow-hidden">
+                        <div class="bg-deepSpace h-full p-4 flex flex-col">
+                            <div class="h-4 w-20 bg-slate-800 rounded-full mx-auto mb-6"></div>
+                            <div class="flex-grow space-y-4">
+                                <div class="bg-emerald/10 border border-emerald/20 p-3 rounded-xl animate-pulse">
+                                    <p class="text-[10px] text-emerald font-bold">NOVO CLIENTE</p>
+                                    <p class="text-xs">"Olá, vi seu anúncio no Google..."</p>
+                                </div>
+                                <div class="bg-slate-800 h-20 rounded-xl"></div>
+                                <div class="bg-slate-800 h-32 rounded-xl"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Elementos Flutuantes -->
+                    <div class="absolute top-10 -left-10 z-30 glass-card p-4 rounded-2xl shadow-xl animate-bounce">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-amberGold rounded-full flex items-center justify-center"><i data-lucide="map-pin" class="w-4 h-4 text-black"></i></div>
+                            <span class="text-xs font-bold">Google Maps Ativo</span>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-20 -right-10 z-30 glass-card p-4 rounded-2xl shadow-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-electricBlue rounded-full flex items-center justify-center"><i data-lucide="globe" class="w-4 h-4 text-white"></i></div>
+                            <span class="text-xs font-bold">Site de Alta Conversão</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PROBLEMA (AQUISIÇÃO) -->
+    <section class="py-24 px-6 bg-slate-950/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-heading font-black text-3xl lg:text-5xl">Onde seu negócio está <span class="text-red-500">travado?</span></h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-3xl reveal">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-6"><i data-lucide="search-slash" class="text-red-500"></i></div>
+                    <h3 class="text-xl font-bold mb-4">Não aparece no Google</h3>
+                    <p class="text-slate-400">Clientes procuram pelo seu serviço na sua cidade e acabam encontrando o seu concorrente.</p>
+                </div>
+                <div class="glass-card p-8 rounded-3xl reveal">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-6"><i data-lucide="user-minus" class="text-red-500"></i></div>
+                    <h3 class="text-xl font-bold mb-4">Não passa confiança</h3>
+                    <p class="text-slate-400">Sem um site profissional, você parece amador. O cliente prefere quem tem uma presença sólida.</p>
+                </div>
+                <div class="glass-card p-8 rounded-3xl reveal">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-6"><i data-lucide="phone-off" class="text-red-500"></i></div>
+                    <h3 class="text-xl font-bold mb-4">Não recebe contatos</h3>
+                    <p class="text-slate-400">Seu telefone não toca e seu WhatsApp vive em silêncio. Você está dependendo apenas da sorte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SOLUÇÃO -->
+    <section class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-3 gap-12 items-center text-center">
+                <div class="reveal">
+                    <div class="text-6xl mb-4">📍</div>
+                    <h4 class="text-2xl font-bold mb-2">Aparecer</h4>
+                    <p class="text-slate-400">Google Meu Negócio otimizado para o topo.</p>
+                </div>
+                <div class="reveal">
+                    <div class="text-6xl mb-4">✨</div>
+                    <h4 class="text-2xl font-bold mb-2">Convencer</h4>
+                    <p class="text-slate-400">Landing Page que vende por você 24h.</p>
+                </div>
+                <div class="reveal">
+                    <div class="text-6xl mb-4">💰</div>
+                    <h4 class="text-2xl font-bold mb-2">Converter</h4>
+                    <p class="text-slate-400">Tráfego direcionado para o seu WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PROVA (Antes/Depois) -->
+    <section class="py-24 px-6 bg-slate-950/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-center font-heading font-black text-3xl mb-16">Resultados Reais</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card p-4 rounded-3xl reveal">
+                    <p class="text-center text-sm font-bold text-slate-500 mb-4 uppercase tracking-widest">Antes da Estrutura</p>
+                    <div class="bg-slate-900 rounded-2xl h-64 flex flex-col items-center justify-center grayscale opacity-50">
+                        <i data-lucide="trending-down" class="w-12 h-12 mb-4 text-red-500"></i>
+                        <p class="text-slate-500 italic">"Ninguém nos encontrava na internet..."</p>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-3xl reveal border-emerald/30">
+                    <p class="text-center text-sm font-bold text-emerald mb-4 uppercase tracking-widest">Depois da Única</p>
+                    <div class="bg-slate-900 rounded-2xl h-64 p-6 overflow-y-auto space-y-3">
+                        <div class="bg-emerald/10 p-3 rounded-lg text-xs border border-emerald/20 flex gap-3">
+                            <div class="w-8 h-8 bg-emerald rounded-full flex-shrink-0"></div>
+                            <p><strong>Novo Lead:</strong> "Bom dia! Gostaria de um orçamento..."</p>
+                        </div>
+                        <div class="bg-emerald/10 p-3 rounded-lg text-xs border border-emerald/20 flex gap-3">
+                            <div class="w-8 h-8 bg-emerald rounded-full flex-shrink-0"></div>
+                            <p><strong>Novo Lead:</strong> "Vi vocês no Google Maps, pode me atender?"</p>
+                        </div>
+                        <div class="bg-emerald/10 p-3 rounded-lg text-xs border border-emerald/20 flex gap-3">
+                            <div class="w-8 h-8 bg-emerald rounded-full flex-shrink-0"></div>
+                            <p><strong>Novo Lead:</strong> "Acabei de ver o site, quero agendar."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PLANOS (ENTRADA) -->
+    <section id="planos" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-heading font-black text-4xl mb-4">Escolha sua Porta de Entrada</h2>
+                <p class="text-slate-400">Estruturas prontas para começar a faturar.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Essencial -->
+                <div class="glass-card p-10 rounded-[2rem] flex flex-col reveal">
+                    <h3 class="text-xl font-bold mb-2">ESSENCIAL</h3>
+                    <div class="mb-8"><span class="text-4xl font-black">R$ 697</span></div>
+                    <ul class="space-y-4 mb-10 text-sm text-slate-400 flex-grow">
+                        <li class="flex gap-2"><i data-lucide="check" class="text-emerald w-4"></i> Google Meu Negócio Profissional</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="text-emerald w-4"></i> Cartão de Visitas Digital</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="text-emerald w-4"></i> Link de WhatsApp Personalizado</li>
+                    </ul>
+                    <a href="https://wa.me/5551981868150" target="_blank" class="w-full py-4 border border-white/10 rounded-xl font-bold text-center uppercase text-xs">Começar</a>
+                </div>
+                <!-- Completo -->
+                <div class="premium-border p-10 rounded-[2rem] flex flex-col reveal scale-105 shadow-2xl relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-electricBlue text-xs font-bold px-4 py-1 rounded-full uppercase">O Mais Recomendado</div>
+                    <h3 class="text-xl font-bold mb-2">COMPLETO</h3>
+                    <div class="mb-8 text-electricBlue"><span class="text-5xl font-black">R$ 1.297</span></div>
+                    <ul class="space-y-4 mb-10 text-sm text-slate-200 flex-grow">
+                        <li class="flex gap-2"><i data-lucide="check" class="text-electricBlue w-4"></i> Tudo do Essencial</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="text-electricBlue w-4"></i> Landing Page Profissional</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="text-electricBlue w-4"></i> Otimização SEO Local</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="text-electricBlue w-4"></i> Suporte Prioritário</li>
+                    </ul>
+                    <a href="https://wa.me/5551981868150" target="_blank" class="w-full py-4 bg-electricBlue text-white rounded-xl font-black text-center uppercase">Contratar agora</a>
+                </div>
+                <!-- Avançado -->
+                <div class="glass-card p-10 rounded-[2rem] flex flex-col reveal">
+                    <h3 class="text-xl font-bold mb-2 text-amberGold">AVANÇADO</h3>
+                    <div class="mb-8"><span class="text-4xl font-black">R$ 2.497</span></div>
+                    <ul class="space-y-4 mb-10 text-sm text-slate-400 flex-grow">
+                        <li class="flex gap-2"><i data-lucide="check" class="text-amberGold w-4"></i> Tudo do Completo</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="text-amberGold w-4"></i> Site Institucional Multi-páginas</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="text-amberGold w-4"></i> Google Ads (Configuração)</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="text-amberGold w-4"></i> Copywriting Profissional</li>
+                    </ul>
+                    <a href="https://wa.me/5551981868150" target="_blank" class="w-full py-4 border border-amberGold/30 text-amberGold rounded-xl font-bold text-center uppercase text-xs">Quero Escala</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. TRANSIÇÃO (A PARTE MAIS IMPORTANTE) -->
+    <section class="py-32 px-6 bg-gradient-to-b from-deepSpace to-purpleIA/10 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10 reveal">
+            <span class="text-purpleIA font-bold tracking-[0.3em] uppercase text-sm">O Próximo Nível</span>
+            <h2 class="font-heading font-black text-4xl lg:text-6xl mt-6 mb-8 italic">“Depois que seu negócio começa a receber mais contatos...”</h2>
+            <div class="grid md:grid-cols-3 gap-6 text-left mt-16">
+                <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                    <i data-lucide="clock-alert" class="text-purpleIA mb-4"></i>
+                    <p class="text-sm font-semibold">Falta tempo para responder a todos</p>
+                </div>
+                <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                    <i data-lucide="layers" class="text-purpleIA mb-4"></i>
+                    <p class="text-sm font-semibold">Mensagens acumuladas no fim do dia</p>
+                </div>
+                <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                    <i data-lucide="user-x" class="text-purpleIA mb-4"></i>
+                    <p class="text-sm font-semibold">Cliente sem resposta desiste da compra</p>
+                </div>
+            </div>
+        </div>
+        <!-- Ambient Particles -->
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+            <div class="absolute top-1/2 left-1/4 w-64 h-64 bg-purpleIA rounded-full blur-[120px]"></div>
+        </div>
+    </section>
+
+    <!-- 7. BLOCO IA (PRODUTO PREMIUM) -->
+    <section class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto ia-gradient p-12 rounded-[3rem] reveal">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-purpleIA rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                            <i data-lucide="cpu" class="text-white w-6 h-6"></i>
+                        </div>
+                        <span class="text-purpleIA font-bold uppercase tracking-widest text-sm">Tecnologia Premium</span>
+                    </div>
+                    <h2 class="font-heading font-black text-4xl lg:text-5xl mb-8">Atendimento automatizado com <span class="text-transparent bg-clip-text bg-gradient-to-r from-purpleIA to-electricBlue font-black italic">Inteligência</span></h2>
+                    
+                    <ul class="space-y-6 mb-12">
+                        <li class="flex items-center gap-4">
+                            <div class="w-6 h-6 rounded-full bg-purpleIA/20 flex items-center justify-center text-purpleIA"><i data-lucide="zap" class="w-4 h-4"></i></div>
+                            <span class="text-slate-300 font-medium">Responde automaticamente em segundos</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <div class="w-6 h-6 rounded-full bg-purpleIA/20 flex items-center justify-center text-purpleIA"><i data-lucide="list-checks" class="w-4 h-4"></i></div>
+                            <span class="text-slate-300 font-medium">Organiza o atendimento por interesse</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <div class="w-6 h-6 rounded-full bg-purpleIA/20 flex items-center justify-center text-purpleIA"><i data-lucide="users" class="w-4 h-4"></i></div>
+                            <span class="text-slate-300 font-medium">Direciona clientes qualificados para você</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <div class="w-6 h-6 rounded-full bg-purpleIA/20 flex items-center justify-center text-purpleIA"><i data-lucide="moon" class="w-4 h-4"></i></div>
+                            <span class="text-slate-300 font-medium">Funciona 24 horas por dia, 7 dias por semana</span>
+                        </li>
+                    </ul>
+
+                    <div class="mb-10">
+                        <p class="text-slate-500 text-sm uppercase font-bold mb-2 tracking-widest">Investimento em Automação</p>
+                        <p class="text-2xl font-bold text-white mb-1">Implantação: R$ 2.000 <span class="text-slate-500 text-base font-normal">/único</span></p>
+                        <p class="text-xl font-bold text-purpleIA">Manutenção: R$ 500 <span class="text-slate-500 text-base font-normal">/mês</span></p>
+                    </div>
+
+                    <a href="https://wa.me/5551981868150" target="_blank" class="inline-flex items-center gap-3 bg-purpleIA text-white px-8 py-4 rounded-2xl font-black text-lg shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:scale-105 transition-all">
+                        Quero automatizar meu atendimento
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="relative">
+                    <div class="glass-card p-6 rounded-3xl border-purpleIA/30 shadow-2xl relative z-10">
+                        <div class="flex items-center gap-4 mb-6 border-b border-white/5 pb-4">
+                            <div class="w-12 h-12 bg-purpleIA rounded-full flex items-center justify-center text-white"><i data-lucide="bot" class="w-7 h-7"></i></div>
+                            <div>
+                                <p class="font-bold">Assistente Virtual Única</p>
+                                <p class="text-[10px] text-emerald font-bold animate-pulse">● ONLINE E ATENDENDO</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none mr-8">
+                                <p class="text-xs text-slate-300">"Olá! Vi que você quer saber sobre o serviço X. Temos disponibilidade amanhã às 14h. Posso agendar?"</p>
+                            </div>
+                            <div class="bg-purpleIA/20 p-4 rounded-2xl rounded-tr-none ml-8 text-right">
+                                <p class="text-xs text-white">"Sim, pode agendar!"</p>
+                            </div>
+                            <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none mr-8 border border-emerald/30">
+                                <p class="text-xs text-slate-300">"Perfeito! Nome e telefone confirmados. Estaremos te esperando! ✅"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Glow behind UI -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purpleIA/30 rounded-full blur-[100px]"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. PROCESSO -->
+    <section class="py-24 px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-center font-heading font-black text-3xl mb-16 uppercase tracking-tighter">O Caminho do Sucesso</h2>
+            <div class="grid md:grid-cols-3 gap-8 relative">
+                <div class="text-center reveal">
+                    <div class="w-16 h-16 bg-cardBg border border-white/10 rounded-full flex items-center justify-center mx-auto mb-6 text-electricBlue font-black">1</div>
+                    <h5 class="font-bold mb-2 uppercase text-sm">Estruturamos sua presença</h5>
+                    <p class="text-slate-500 text-xs">Google Maps + Site configurados para conversão.</p>
+                </div>
+                <div class="text-center reveal">
+                    <div class="w-16 h-16 bg-cardBg border border-white/10 rounded-full flex items-center justify-center mx-auto mb-6 text-emerald font-black">2</div>
+                    <h5 class="font-bold mb-2 uppercase text-sm">Você recebe contatos</h5>
+                    <p class="text-slate-500 text-xs">Novas oportunidades chegando direto no seu WhatsApp.</p>
+                </div>
+                <div class="text-center reveal">
+                    <div class="w-16 h-16 bg-purpleIA/20 border border-purpleIA/30 rounded-full flex items-center justify-center mx-auto mb-6 text-purpleIA font-black shadow-[0_0_15px_rgba(139,92,246,0.3)]">3</div>
+                    <h5 class="font-bold mb-2 uppercase text-sm">Automatizamos o atendimento</h5>
+                    <p class="text-slate-500 text-xs text-purpleIA/80 font-bold">IA Premium gerenciando e fechando vendas 24h.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FAQ -->
+    <section id="faq" class="py-24 px-6 bg-slate-950/50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-heading font-black text-3xl text-center mb-16">Dúvidas Comuns</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- FAQ Início -->
+                <div>
+                    <h6 class="text-electricBlue font-bold mb-6 flex items-center gap-2 uppercase text-xs tracking-widest border-b border-electricBlue/20 pb-2">
+                        <i data-lucide="rocket" class="w-4"></i> Início & Estrutura
+                    </h6>
+                    <div class="space-y-4">
+                        <div class="glass-card p-5 rounded-xl cursor-pointer group" onclick="toggleFaq(this)">
+                            <p class="text-sm font-bold flex justify-between items-center">Preciso saber tecnologia? <i data-lucide="chevron-down" class="w-4 transition-transform"></i></p>
+                            <p class="text-xs text-slate-500 mt-3 hidden">Não. Nós fazemos absolutamente tudo e te entregamos pronto.</p>
+                        </div>
+                        <div class="glass-card p-5 rounded-xl cursor-pointer group" onclick="toggleFaq(this)">
+                            <p class="text-sm font-bold flex justify-between items-center">Funciona para o meu negócio? <i data-lucide="chevron-down" class="w-4 transition-transform"></i></p>
+                            <p class="text-xs text-slate-500 mt-3 hidden">Se você vende produtos ou serviços para pessoas na sua região, sim!</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- FAQ IA -->
+                <div>
+                    <h6 class="text-purpleIA font-bold mb-6 flex items-center gap-2 uppercase text-xs tracking-widest border-b border-purpleIA/20 pb-2">
+                        <i data-lucide="bot" class="w-4"></i> Inteligência Artificial
+                    </h6>
+                    <div class="space-y-4">
+                        <div class="glass-card p-5 rounded-xl border-purpleIA/10 cursor-pointer group" onclick="toggleFaq(this)">
+                            <p class="text-sm font-bold flex justify-between items-center">É automático mesmo? <i data-lucide="chevron-down" class="w-4 transition-transform"></i></p>
+                            <p class="text-xs text-slate-500 mt-3 hidden">Sim. A IA conversa, tira dúvidas básicas e qualifica o lead sem você precisar digitar uma letra.</p>
+                        </div>
+                        <div class="glass-card p-5 rounded-xl border-purpleIA/10 cursor-pointer group" onclick="toggleFaq(this)">
+                            <p class="text-sm font-bold flex justify-between items-center">Preciso responder algo? <i data-lucide="chevron-down" class="w-4 transition-transform"></i></p>
+                            <p class="text-xs text-slate-500 mt-3 hidden">Você só entra no chat quando o cliente já está pronto para fechar ou agendar, poupando 90% do seu tempo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. CTA FINAL -->
+    <section class="py-24 px-6 bg-deepSpace relative overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center reveal border border-white/5 p-16 rounded-[3rem] bg-slate-900/40 relative z-10 shadow-2xl">
+            <h2 class="font-heading font-black text-3xl lg:text-5xl mb-6">Seu negócio pode receber clientes todos os dias.</h2>
+            <p class="text-slate-400 text-xl mb-12">— E atendendo sem perder oportunidades.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="https://wa.me/5551981868150" target="_blank" class="bg-emerald text-white px-10 py-5 rounded-2xl font-black text-lg btn-glow flex items-center justify-center gap-3">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                    Falar no WhatsApp
+                </a>
+                <a href="https://wa.me/5551981868150" target="_blank" class="bg-purpleIA text-white px-10 py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 hover:brightness-110 transition-all shadow-lg">
+                    <i data-lucide="bot" class="w-6 h-6"></i>
+                    Quero Automatizar
+                </a>
+            </div>
+        </div>
+        <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-electricBlue/10 rounded-full blur-[120px]"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5 text-center">
+        <div class="flex items-center justify-center gap-3 mb-6">
+            <img src="https://drive.google.com/thumbnail?id=17uwvGbMHXmlj0nxgmeO4VDsTVoKP5oAP&sz=w300" alt="Logo" class="h-6 opacity-80">
+            <span class="font-heading font-black text-sm uppercase">Única <span class="text-electricBlue">Inteligência</span></span>
+        </div>
+        <p class="text-slate-600 text-[10px] tracking-widest uppercase mb-4">Estrutura Digital & Inteligência para Negócios Locais</p>
+        <p class="text-slate-700 text-xs">© 2025 Única Inteligência. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- WhatsApp Floating -->
+    <a href="https://wa.me/5551981868150" target="_blank" class="fixed bottom-6 right-6 z-[100] w-16 h-16 bg-emerald rounded-full flex items-center justify-center text-white shadow-2xl whatsapp-pulse">
+        <i data-lucide="message-circle" class="w-8 h-8"></i>
+    </a>
+
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.onload = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach((el) => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 40,
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power3.out"
+                });
+            });
+        };
+
+        function toggleFaq(el) {
+            const content = el.querySelector('p:nth-child(2)');
+            const icon = el.querySelector('i');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+    </script>
+</body>
+</html>
